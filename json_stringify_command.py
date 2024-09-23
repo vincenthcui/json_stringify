@@ -30,7 +30,7 @@ class JsonStringifyCommand(sublime_plugin.TextCommand): # pylint: disable=too-fe
 			replace_text = invert_json_string(text)
 			self.view.replace(edit, region, replace_text)
 
-def invert_json_string(text: str, indent: str = "\t") -> str:
+def invert_json_string(text: str, indent: str = None, separators=(',', ':')) -> str:
 	"""Either string encode or decode a `str` containing JSON"""
 	if is_json_string(text):
 		# Decode JSON string to raw JSON
@@ -40,7 +40,7 @@ def invert_json_string(text: str, indent: str = "\t") -> str:
 	# We pass this through loads->dumps->dumps to convert any indentation to '\t' characters. This
 	# way, when the resultant string is inverted back Sublime Text correctly translates the '\t'
 	# character into the user's current indentation setting.
-	return json.dumps(json.dumps(json.loads(text)))
+	return json.dumps(json.dumps(json.loads(text), indent=indent, separators=separators))
 
 def is_json_string(text: str) -> bool:
 	"""
