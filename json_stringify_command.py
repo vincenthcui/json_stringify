@@ -40,7 +40,7 @@ def invert_json_string(text: str, indent: str = "\t") -> str:
 	# We pass this through loads->dumps->dumps to convert any indentation to '\t' characters. This
 	# way, when the resultant string is inverted back Sublime Text correctly translates the '\t'
 	# character into the user's current indentation setting.
-	return json.dumps(json.dumps(json.loads(text), indent=indent))
+	return json.dumps(json.dumps(json.loads(text)))
 
 def is_json_string(text: str) -> bool:
 	"""
